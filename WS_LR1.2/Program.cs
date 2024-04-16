@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 class Program
 {
     static void Main()
     {
-        ComplexNumber num1 = new ComplexNumber(2, -10);
-        ComplexNumber num2 = new ComplexNumber(-1, 2);
+        Console.WriteLine("Ведите первое число");
+        ComplexNumber num1 = new ComplexNumber(Console.ReadLine());
+        Console.WriteLine("Ведите второе число");
+        ComplexNumber num2 = new ComplexNumber(Console.ReadLine());
 
         Console.WriteLine($"Число 1: {num1.ToString()}");
         Console.WriteLine($"Число 2: {num2.ToString()}");
@@ -21,6 +24,23 @@ class ComplexNumber
 {
     public double Real { get; set; }
     public double Imaginary { get; set; }
+
+    public ComplexNumber(string str)
+    {
+        string imaginaryPattern = @"-?\d+i";
+        Match imaginaryMatch = Regex.Match(str, imaginaryPattern);
+        if (imaginaryMatch.Success)
+        {
+            Imaginary = Convert.ToDouble(imaginaryMatch.Value.Replace("i", ""));
+        }
+
+        string realPattern = @"^-?\d+";
+        Match realMatch = Regex.Match(str, realPattern);
+        if (realMatch.Success)
+        {
+            Real = Convert.ToDouble(realMatch.Value);
+        }
+    }
 
     public ComplexNumber(double real, double imaginary)
     {

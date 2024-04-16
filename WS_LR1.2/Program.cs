@@ -75,7 +75,7 @@ class ComplexNumber
 
     public  string ToString()
     {
-        return $"{Real} + {Imaginary}i";
+        return (Imaginary>=0) ? $"{Real} + {Imaginary}i" : $"{Real} - {Imaginary * -1}i";
     }
 }
 
